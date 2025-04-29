@@ -1,27 +1,72 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
+ion-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+  }
+  
+  .clock-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  
+    ion-icon.clock-icon {
+      font-size: 24px;
+      color: var(--ion-color-medium);
+    }
+  
+    h2 {
+      font-weight: normal;
+      font-size: 1.2rem;
+      margin: 0;
+    }
+  }
+  
+  .timer-circle {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 20px 0;
+  
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  
+    .timer-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      h1 {
+        margin: 0;
+        font-size: 2.5rem;
+      }
+      h3 {
+        margin-top: 5px;
+        font-weight: 400;
+      }
+    }
+  }
+  
+  /* Dark mode support */
+  :host-context(.dark) {
+    ion-toolbar {
+      --background: #222;
+      --color: #fff;
+    }
+  
+    ion-content {
+      background: #121212;
+      color: white;
+    }
+  
+    .timer-text h1,
+    .timer-text h3,
+    h2 {
+      color: white;
+    }
+  }

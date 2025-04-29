@@ -1,20 +1,61 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-header>
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title>Pomodoro App</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+  
+  <ion-content class="ion-padding">
+    <div class="clock-container">
+      <ion-icon name="time-outline" class="clock-icon"></ion-icon>
+      <h2>{{ currentTime }}</h2>
+    </div>
+  
+    <div class="timer-circle">
+      <svg [attr.width]="radius * 2" [attr.height]="radius * 2">
+        <circle
+          [attr.r]="radius"
+          [attr.cx]="radius"
+          [attr.cy]="radius"
+          stroke="#ccc"
+          stroke-width="12"
+          fill="none"
+        />
+        <circle
+          [attr.r]="radius"
+          [attr.cx]="radius"
+          [attr.cy]="radius"
+          stroke="var(--ion-color-primary)"
+          stroke-width="12"
+          fill="none"
+          [attr.stroke-dasharray]="circumference"
+          [attr.stroke-dashoffset]="strokeDashoffset"
+          transform="rotate(-90, 100, 100)"
+        />
+      </svg>
+      <div class="timer-text">
+        <h1 *ngIf="timerDisplay">{{ timerDisplay }}</h1>
+        <h3 *ngIf="cycleState === 'work'">Work Time</h3>
+        <h3 *ngIf="cycleState === 'break'">Break Time</h3>
+      </div>
+    </div>
+  
+    <ion-button expand="block" *ngIf="!isRunning && cycleState === 'idle'" (click)="startPomodoro()" color="success">
+      <ion-icon name="play-circle-outline" slot="start"></ion-icon>
+      Start Pomodoro Cycle
+    </ion-button>
+  
+    <ion-button expand="block" *ngIf="isRunning" (click)="pauseTimer()" color="warning">
+      <ion-icon name="pause-circle-outline" slot="start"></ion-icon>
+      Pause
+    </ion-button>
+  
+    <ion-button expand="block" *ngIf="!isRunning && cycleState !== 'idle'" (click)="resumeTimer()" color="success">
+      <ion-icon name="play-circle-outline" slot="start"></ion-icon>
+      Resume
+    </ion-button>
+  
+    <ion-button expand="block" *ngIf="cycleState !== 'idle'" (click)="resetPomodoro()" color="danger">
+      <ion-icon name="stop-circle-outline" slot="start"></ion-icon>
+      Reset
+    </ion-button>
+  </ion-content>
