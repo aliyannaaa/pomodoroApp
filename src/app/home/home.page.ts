@@ -19,12 +19,15 @@ export class HomePage implements OnInit {
   countdown: any;
   cycleState: 'idle' | 'work' | 'break' = 'idle';
 
+  // Configurable Durations (Default to 25 and 5)
+  workDuration: number = 25;
+  breakDuration: number = 5;
+
   radius: number = 100;
   circumference: number = 2 * Math.PI * this.radius;
   strokeDashoffset: number = this.circumference;
 
   constructor() {
-    // Handle back button to exit the app
     App.addListener('backButton', () => {
       App.exitApp();
     });
@@ -52,7 +55,7 @@ export class HomePage implements OnInit {
     const secs = this.duration % 60;
     this.timerDisplay = `${this.pad(mins)}:${this.pad(secs)}`;
 
-    const progress = this.duration / (this.cycleState === 'work' ? 25 * 60 : 5 * 60);
+    const progress = this.duration / (this.cycleState === 'work' ? this.workDuration * 60 : this.breakDuration * 60);
     this.strokeDashoffset = this.circumference * (1 - progress);
   }
 
@@ -60,8 +63,9 @@ export class HomePage implements OnInit {
     return val < 10 ? '0' + val : val.toString();
   }
 
+  // Start the Pomodoro cycle with configurable time
   startPomodoro() {
-    this.startTimer(25 * 60, 'work');
+    this.startTimer(this.workDuration * 60, 'work');
   }
 
   startTimer(seconds: number, type: 'work' | 'break') {
@@ -108,7 +112,7 @@ export class HomePage implements OnInit {
     if (this.cycleState === 'work') {
       await this.sendNotification('Work session ended! Time for a break.');
       this.playSound('work-end.mp3');
-      this.startTimer(5 * 60, 'break');
+      this.startTimer(this.breakDuration * 60, 'break');
     } else {
       await this.sendNotification('Break ended! Ready to work again.');
       this.playSound('break-end.mp3');

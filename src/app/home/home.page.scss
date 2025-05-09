@@ -1,72 +1,85 @@
 ion-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.timer-circle {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
-  
-  .clock-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  
-    ion-icon.clock-icon {
-      font-size: 24px;
-      color: var(--ion-color-medium);
-    }
-  
-    h2 {
-      font-weight: normal;
-      font-size: 1.2rem;
+
+  .timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    h1 {
       margin: 0;
+      font-size: 2.5rem;
+    }
+
+    h3 {
+      margin-top: 5px;
+      font-weight: 400;
     }
   }
-  
-  .timer-circle {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    margin: 20px 0;
-  
-    svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-  
-    .timer-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      h1 {
-        margin: 0;
-        font-size: 2.5rem;
-      }
-      h3 {
-        margin-top: 5px;
-        font-weight: 400;
-      }
-    }
+}
+
+ion-card {
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+ion-item {
+  margin: 10px 0;
+}
+
+:host-context(.dark) {
+  ion-toolbar {
+    --background: #222;
+    --color: #fff;
   }
-  
-  /* Dark mode support */
-  :host-context(.dark) {
-    ion-toolbar {
-      --background: #222;
-      --color: #fff;
-    }
-  
-    ion-content {
-      background: #121212;
-      color: white;
-    }
-  
-    .timer-text h1,
-    .timer-text h3,
-    h2 {
-      color: white;
-    }
+
+  ion-content {
+    background: #121212;
+    color: white;
   }
+
+  .timer-text h1, .timer-text h3 {
+    color: white;
+  }
+}
+
+ion-button {
+  &.ion-color-primary {
+    --background: #4caf50; /* Green color for Start */
+    --background-hover: #316831;
+    --background-activated: #3d8e3d;
+    --color: white;
+  }
+
+  &.ion-color-tertiary {
+    --background: #ff9800; /* Orange color for Pause */
+    --background-hover: #a77730;
+    --background-activated: #cc7700;
+    --color: white;
+  }
+
+  &.ion-color-medium {
+    --background: #f44336; /* Red color for Reset */
+    --background-hover: #e3342f;
+    --background-activated: #c62828;
+    --color: white;
+  }
+}
+

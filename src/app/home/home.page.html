@@ -1,61 +1,58 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title>Pomodoro App</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content class="ion-padding">
-    <div class="clock-container">
-      <ion-icon name="time-outline" class="clock-icon"></ion-icon>
-      <h2>{{ currentTime }}</h2>
-    </div>
-  
-    <div class="timer-circle">
-      <svg [attr.width]="radius * 2" [attr.height]="radius * 2">
-        <circle
-          [attr.r]="radius"
-          [attr.cx]="radius"
-          [attr.cy]="radius"
-          stroke="#ccc"
-          stroke-width="12"
-          fill="none"
-        />
-        <circle
-          [attr.r]="radius"
-          [attr.cx]="radius"
-          [attr.cy]="radius"
-          stroke="var(--ion-color-primary)"
-          stroke-width="12"
-          fill="none"
-          [attr.stroke-dasharray]="circumference"
-          [attr.stroke-dashoffset]="strokeDashoffset"
-          transform="rotate(-90, 100, 100)"
-        />
-      </svg>
-      <div class="timer-text">
-        <h1 *ngIf="timerDisplay">{{ timerDisplay }}</h1>
-        <h3 *ngIf="cycleState === 'work'">Work Time</h3>
-        <h3 *ngIf="cycleState === 'break'">Break Time</h3>
+  <ion-toolbar>
+    <ion-title>Pomodoro App</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Pomodoro Timer</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="timer-circle">
+        <svg [attr.width]="radius * 2" [attr.height]="radius * 2">
+          <circle [attr.r]="radius" [attr.cx]="radius" [attr.cy]="radius" stroke="#ccc" stroke-width="12" fill="none"/>
+          <circle
+            [attr.r]="radius" [attr.cx]="radius" [attr.cy]="radius"
+            stroke="var(--ion-color-primary)" stroke-width="12" fill="none"
+            [attr.stroke-dasharray]="circumference" [attr.stroke-dashoffset]="strokeDashoffset"
+            transform="rotate(-90, 100, 100)"
+          />
+        </svg>
+        <div class="timer-text">
+          <h1 *ngIf="timerDisplay">{{ timerDisplay }}</h1>
+          <h3 *ngIf="cycleState === 'work'">Work Time</h3>
+          <h3 *ngIf="cycleState === 'break'">Break Time</h3>
+        </div>
       </div>
-    </div>
-  
-    <ion-button expand="block" *ngIf="!isRunning && cycleState === 'idle'" (click)="startPomodoro()" color="success">
-      <ion-icon name="play-circle-outline" slot="start"></ion-icon>
-      Start Pomodoro Cycle
-    </ion-button>
-  
-    <ion-button expand="block" *ngIf="isRunning" (click)="pauseTimer()" color="warning">
-      <ion-icon name="pause-circle-outline" slot="start"></ion-icon>
-      Pause
-    </ion-button>
-  
-    <ion-button expand="block" *ngIf="!isRunning && cycleState !== 'idle'" (click)="resumeTimer()" color="success">
-      <ion-icon name="play-circle-outline" slot="start"></ion-icon>
-      Resume
-    </ion-button>
-  
-    <ion-button expand="block" *ngIf="cycleState !== 'idle'" (click)="resetPomodoro()" color="danger">
-      <ion-icon name="stop-circle-outline" slot="start"></ion-icon>
-      Reset
-    </ion-button>
-  </ion-content>
+
+      <ion-item>
+        <ion-label>Work Duration (minutes)</ion-label>
+        <ion-input type="number" [(ngModel)]="workDuration" placeholder="25"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Break Duration (minutes)</ion-label>
+        <ion-input type="number" [(ngModel)]="breakDuration" placeholder="5"></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" *ngIf="!isRunning" (click)="startPomodoro()" color="primary">
+        <ion-icon name="play-circle-outline" slot="start"></ion-icon>
+        Start
+      </ion-button>
+      
+      <ion-button expand="block" *ngIf="isRunning" (click)="pauseTimer()" color="tertiary">
+        <ion-icon name="pause-circle-outline" slot="start"></ion-icon>
+        Pause
+      </ion-button>
+      
+      <ion-button expand="block" (click)="resetPomodoro()" color="medium">
+        <ion-icon name="stop-circle-outline" slot="start"></ion-icon>
+        Reset
+      </ion-button>
+      
+    </ion-card-content>
+  </ion-card>
+</ion-content>
